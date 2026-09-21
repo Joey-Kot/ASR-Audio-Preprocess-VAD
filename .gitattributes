@@ -1,0 +1,3 @@
+# Build scripts and checksum manifests must remain portable on Windows.
+*.sh text eol=lf
+*.sha256 text eol=lf

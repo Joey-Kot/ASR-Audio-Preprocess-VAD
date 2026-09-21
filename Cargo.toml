@@ -1,0 +1,35 @@
+[package]
+name = "smartaudio"
+version = "0.1.0"
+edition = "2024"
+autobins = false
+rust-version = "1.98.1"
+license = "GPL-3.0-or-later"
+description = "Streaming Earshot audio preprocessing with embedded libav"
+repository = "https://github.com/Joey-Kot/ASR-Audio-Preprocess"
+include = ["/src/**", "/native/**", "/build.rs", "/Cargo.toml", "/Cargo.lock", "/rust-toolchain.toml", "/examples/**", "/tests/**", "/scripts/**", "/docs/**", "/README.md", "/README_ZH.md", "/LICENSE", "/NOTICE", "/THIRD_PARTY_LICENSES/**", "/THIRD_PARTY_NOTICES.md"]
+
+[lib]
+name = "smartaudio"
+
+[[bin]]
+name = "smartaudio"
+path = "src/bin/smartaudio.rs"
+
+[dependencies]
+earshot = "=1.2.2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+clap = { version = "4", features = ["derive"] }
+tempfile = "3"
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+
+[build-dependencies]
+cc = "1"
+pkg-config = "0.3"
+
+[dev-dependencies]
+hound = "3.5"
