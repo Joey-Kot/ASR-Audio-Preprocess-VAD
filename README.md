@@ -4,8 +4,8 @@
 
 A synchronous Rust library and thin CLI for preparing audio for ASR APIs.
 Speech detection uses **Earshot `=1.2.2`**. Decoding, sample selection, conversion,
-encoding and muxing use **statically linked FFmpeg/libav 8.1.2**. The runtime
-does not launch `ffmpeg` or `ffprobe`. Rust **1.98.1** is required.
+encoding and muxing use **statically linked FFmpeg/libav 8.1.3**. The runtime
+does not launch `ffmpeg` or `ffprobe`. Rust **1.99.1** is required.
 
 Microphone capture, GUI, upload/authentication, ASR request concurrency, retries
 and transcript merging belong to the caller.
@@ -163,7 +163,7 @@ initialization additionally validates audio parameters.
 Containers: WAV, MP3, Ogg, Opus, SPX, ADTS, AMR, AVI, FLAC, FLV, M4A,
 Matroska, MOV, MP4, MPEG-PS, WebM, ASF/WMA, AIFF, WavPack, AC-3, E-AC-3
 and registered raw PCM formats. These are **not a Cartesian product**.
-There is no dedicated raw signed 64-bit PCM muxer. The `pcm_s64be` encoder is compiled, but FFmpeg 8.1.2 has
+There is no dedicated raw signed 64-bit PCM muxer. The `pcm_s64be` encoder is compiled, but FFmpeg 8.1.3 has
 no verified pairing for it among the requested muxers, so it is not advertised
 by `formats`. Signed 64-bit LE/WAV is verified. Raw input needs explicit
 format/rate/channels. Corresponding audio demuxers, parsers and decoders are
@@ -226,6 +226,12 @@ The bootstrap requires a C/C++ compiler, make, autotools, pkg-config, curl and
 tar/xz. It installs only into the project prefix. Source versions/checksums
 are pinned in `scripts/audio-sources.sha256`; configure component lists are
 centralized in `scripts/audio-components.sh` and checked before compilation.
+Both build entry points require `patch`, apply the vendored FFmpeg PR 24593
+backport for `CVE-2026-107678`, and run `fate-encryption-info` (upstream append
+test plus a 100,000-node free regression). Source or patch mismatches stop the
+build. Run `./scripts/test-ffmpeg-security.sh` after building to check MOV `pssh`
+handling. See the [security audit](docs/security-audit-2026-10-23.md).
+
 `scripts/build-ffmpeg-audio-static.sh` can rebuild only FFmpeg with `FFMPEG_DIR`
 and `PREFIX` set. Cargo consumers must provide the same static development
 libraries through pkg-config. See [validation](docs/validation.md) for the

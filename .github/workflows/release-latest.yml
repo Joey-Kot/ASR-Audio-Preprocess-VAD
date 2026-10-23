@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 env:
   CARGO_TERM_COLOR: always
-  RUST_VERSION: 1.98.1
+  RUST_VERSION: 1.99.1
 jobs:
   linux:
     name: Build (linux-${{ matrix.arch }})
@@ -32,7 +32,7 @@ jobs:
       - name: Build tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential autoconf automake libtool pkg-config curl xz-utils tar
+          sudo apt-get install -y build-essential autoconf automake libtool patch pkg-config curl xz-utils tar
       - name: Rust
         run: rustup toolchain install "$RUST_VERSION" --profile minimal --component rustfmt --component clippy
       - name: Audio dependencies
@@ -40,6 +40,8 @@ jobs:
       - name: Test and build
         run: |
           export PKG_CONFIG_PATH="$PWD/third_party/ffmpeg-audio/lib/pkgconfig"
+          ./scripts/tests/patch-application.sh third_party/src/ffmpeg-8.1.3
+          ./scripts/test-ffmpeg-security.sh
           cargo fmt --all --check
           cargo clippy --locked --all-targets -- -D warnings
           cargo test --locked
@@ -97,7 +99,7 @@ jobs:
           path-type: inherit
           update: true
           install: >-
-            base-devel autoconf automake libtool make curl tar xz zip
+            base-devel autoconf automake libtool make patch curl tar xz zip
             ${{ matrix.prefix }}-pkgconf ${{ matrix.prefix }}-toolchain
       - name: Rust
         run: |
@@ -120,6 +122,8 @@ jobs:
         run: |
           export PKG_CONFIG_PATH="$PWD/third_party/ffmpeg-audio/lib/pkgconfig"
           export PKG_CONFIG_ALLOW_CROSS=1
+          ./scripts/tests/patch-application.sh third_party/src/ffmpeg-8.1.3
+          ./scripts/test-ffmpeg-security.sh
           cargo fmt --all --check
           cargo clippy --locked --all-targets -- -D warnings
           cargo test --locked
@@ -165,6 +169,8 @@ jobs:
       - name: Test and build
         run: |
           export PKG_CONFIG_PATH="$PWD/third_party/ffmpeg-audio/lib/pkgconfig"
+          ./scripts/tests/patch-application.sh third_party/src/ffmpeg-8.1.3
+          ./scripts/test-ffmpeg-security.sh
           cargo fmt --all --check
           cargo clippy --locked --all-targets -- -D warnings
           cargo test --locked

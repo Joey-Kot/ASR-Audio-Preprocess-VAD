@@ -4,8 +4,8 @@ fn main() {
         .output()
         .expect("rustc version");
     assert!(
-        String::from_utf8_lossy(&compiler.stdout).starts_with("rustc 1.98.1 "),
-        "Rust 1.98.1 is required"
+        String::from_utf8_lossy(&compiler.stdout).starts_with("rustc 1.99.1 "),
+        "Rust 1.99.1 is required"
     );
     println!("cargo:rerun-if-changed=native/audio.c");
     println!("cargo:rerun-if-changed=native/audio.h");

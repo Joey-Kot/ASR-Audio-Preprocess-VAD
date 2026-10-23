@@ -8,7 +8,7 @@ informed by STT-for-Windows, by the same author under GPL-3.0-or-later.
 
 | Component | Version | License text |
 |---|---|---|
-| FFmpeg | 8.1.2 | `THIRD_PARTY_LICENSES/FFmpeg-GPL-3.0-or-later.txt` |
+| FFmpeg | 8.1.3 | `THIRD_PARTY_LICENSES/FFmpeg-GPL-3.0-or-later.txt` |
 | Opus | 1.5.2 | `THIRD_PARTY_LICENSES/Opus-BSD-3-Clause.txt` |
 | LAME | 3.100 | `THIRD_PARTY_LICENSES/LAME-LGPL-2.0-only.txt` |
 | libogg | 1.3.5 | `THIRD_PARTY_LICENSES/Xiph-BSD-3-Clause.txt` |
@@ -21,6 +21,11 @@ Source download URLs are in `scripts/bootstrap-static-audio-deps.sh` and archive
 SHA-256 digests in `scripts/audio-sources.sha256`. The FFmpeg build enables GPL
 and version 3 and disables nonfree, libavfilter and network access. No PortAudio
 or alternative VAD backend is linked.
+
+FFmpeg includes the local `scripts/patches/ffmpeg-8.1.3-cve-2026-107678.patch`
+backport of upstream PR 24593, including its append test and an additional
+long-list free regression. The upstream LGPL-2.1-or-later license applies to
+these changes; the complete configured FFmpeg build remains GPL-3.0-or-later.
 
 ## Earshot and Rust dependencies
 

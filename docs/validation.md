@@ -3,7 +3,18 @@
 This file records checks actually run; CI definitions alone are not evidence of
 successful target builds. No formal release has been made.
 
-## Local environment
+## Security update — 2026-10-23
+
+Rust/cargo **1.99.1**, FFmpeg **8.1.3 plus PR 24593**, Earshot **1.2.2**.
+Linux x86_64: rebuilt all static dependencies, passed fmt/clippy, 33 tests
+(including 117 container/encoder pairs), the independent consumer check, Cargo
+package verification and the release build. FFmpeg encryption-info, long-list
+free, MOV `pssh` and patch-application regressions also passed.
+The 48-dependency RustSec scan found zero vulnerabilities or warnings.
+See the [security audit](security-audit-2026-10-23.md) for sources and scope.
+Windows/macOS/ARM64 validation remains the responsibility of CI.
+
+## Original rewrite environment
 
 - Rust/cargo **1.98.1**, Earshot **1.2.2**, FFmpeg **8.1.2**.
 - Linux x86_64, static libav and external audio libraries.
