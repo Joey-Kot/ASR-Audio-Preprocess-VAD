@@ -222,15 +222,10 @@ cargo run --locked --example library -- recording.m4a example-chunks
 cargo package --locked --allow-dirty
 ```
 
-The bootstrap requires a C/C++ compiler, make, autotools, pkg-config, curl and
-tar/xz. It installs only into the project prefix. Source versions/checksums
+The bootstrap requires a C/C++ compiler, make, autotools, patch, pkg-config,
+curl and tar/xz. It installs only into the project prefix. Source versions/checksums
 are pinned in `scripts/audio-sources.sha256`; configure component lists are
 centralized in `scripts/audio-components.sh` and checked before compilation.
-Both build entry points require `patch`, apply the vendored FFmpeg PR 24593
-backport for `CVE-2026-107678`, and run `fate-encryption-info` (upstream append
-test plus a 100,000-node free regression). Source or patch mismatches stop the
-build. Run `./scripts/test-ffmpeg-security.sh` after building to check MOV `pssh`
-handling. See the [security audit](docs/security-audit-2026-10-23.md).
 
 `scripts/build-ffmpeg-audio-static.sh` can rebuild only FFmpeg with `FFMPEG_DIR`
 and `PREFIX` set. Cargo consumers must provide the same static development

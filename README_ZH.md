@@ -201,10 +201,6 @@ cargo package --locked --allow-dirty
 bootstrap 需要 C/C++ 编译器、make、autotools、patch、pkg-config、curl、tar/xz，
 只安装到项目指定前缀。源码版本和校验值固定在 `scripts/audio-sources.sha256`；
 组件集中维护于 `scripts/audio-components.sh`，configure 后逐项检查。
-两个构建入口都会应用仓库内 FFmpeg PR 24593 的 `CVE-2026-107678` 回补补丁，
-并运行 `fate-encryption-info`，覆盖上游追加测试和十万节点链表释放测试。
-源码或补丁不匹配时停止构建；构建后可运行 `./scripts/test-ffmpeg-security.sh`
-检查 MOV `pssh` 处理。详见[安全审计记录](docs/security-audit-2026-10-23.md)。
 设置 `FFMPEG_DIR` 和 `PREFIX` 后，`scripts/build-ffmpeg-audio-static.sh` 可以单独
 重编译 FFmpeg。Rust 库使用方同样需要通过 pkg-config 提供对应静态开发库。
 实际平台状态及完成条件见[验证记录](docs/validation.md)。目前尚未正式发布 Rust 版本。
