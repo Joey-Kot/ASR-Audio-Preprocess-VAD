@@ -1,13 +1,12 @@
 #!/usr/bin/env sh
 set -eu
 ROOT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
-FFMPEG_DIR="${FFMPEG_DIR:-$ROOT_DIR/third_party/src/ffmpeg-8.1.3}"
+FFMPEG_DIR="${FFMPEG_DIR:-$ROOT_DIR/third_party/src/ffmpeg-9.0.2}"
 PREFIX="${PREFIX:-$ROOT_DIR/third_party/ffmpeg-audio}"
 JOBS="${JOBS:-4}"
 CC="${CC:-cc}"
 PKG_CONFIG_BIN="${PKG_CONFIG_BIN:-pkg-config}"
 . "$ROOT_DIR/scripts/audio-components.sh"
-"$ROOT_DIR/scripts/apply-ffmpeg-security-patches.sh" "$FFMPEG_DIR"
 cd "$FFMPEG_DIR"
 export PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig"
 ./configure \
@@ -37,5 +36,4 @@ check_components DECODER "$decoders"
 check_components ENCODER "$encoders"
 check_components MUXER "$muxers"
 make -j"$JOBS"
-make -j"$JOBS" fate-encryption-info
 make install

@@ -79,7 +79,7 @@ fn help_version_errors_and_json() {
     let list = Command::new(bin).arg("formats").output().unwrap();
     assert!(list.status.success());
     let parsed: serde_json::Value = serde_json::from_slice(&list.stdout).unwrap();
-    assert_eq!(parsed["ffmpeg"], "8.1.3");
+    assert_eq!(parsed["ffmpeg"], "9.0.2");
     assert!(!parsed["pairs"].as_array().unwrap().is_empty());
 }
 

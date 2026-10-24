@@ -63,7 +63,7 @@ fetch speex-1.2.1.tar.gz https://downloads.xiph.org/releases/speex/speex-1.2.1.t
 build_dependency speex-1.2.1 --disable-binaries --disable-examples
 fetch vo-amrwbenc-0.1.3.tar.gz https://downloads.sourceforge.net/project/opencore-amr/vo-amrwbenc/vo-amrwbenc-0.1.3.tar.gz
 build_dependency vo-amrwbenc-0.1.3
-fetch ffmpeg-8.1.3.tar.gz https://ffmpeg.org/releases/ffmpeg-8.1.3.tar.gz
-export FFMPEG_DIR="$SRC_DIR/ffmpeg-8.1.3"
+fetch ffmpeg-9.0.2.tar.gz https://www.ffmpeg.org/releases/ffmpeg-9.0.2.tar.gz
+export FFMPEG_DIR="$SRC_DIR/ffmpeg-9.0.2"
 "$ROOT_DIR/scripts/build-ffmpeg-audio-static.sh"
 printf 'Static audio dependencies installed at: %s\n' "$PREFIX"

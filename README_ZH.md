@@ -4,7 +4,7 @@
 
 为 ASR API 准备音频的同步 **Rust 库和薄 CLI**。语音检测固定使用
 **Earshot `=1.2.2`**，解码、样本裁剪、转换、编码和封装使用静态链接的
-**FFmpeg/libav 8.1.3**。运行时不启动系统 `ffmpeg` 或 `ffprobe`。
+**FFmpeg/libav 9.0.2**。运行时不启动系统 `ffmpeg` 或 `ffprobe`。
 Rust 工具链固定为 **1.99.1**。
 
 麦克风录音、GUI、上传和鉴权、ASR 请求并发、重试、识别结果合并由调用方负责。
@@ -146,7 +146,7 @@ PCM、无损编码和 ADPCM 使用 `--no-bitrate`，对应 Rust 的 `None`。
 容器包括 WAV、MP3、Ogg、Opus、SPX、ADTS、AMR、AVI、FLAC、FLV、M4A、
 Matroska、MOV、MP4、MPEG-PS、WebM、ASF/WMA、AIFF、WavPack、AC-3、E-AC-3
 和已注册裸 PCM 格式。这些编码和容器不能任意交叉组合，也没有专用的裸 64 位整数
-PCM 封装器。`pcm_s64be` 编码器已编入，但 FFmpeg 8.1.3 在所要求的容器中没有
+PCM 封装器。`pcm_s64be` 编码器已编入，但 FFmpeg 9.0.2 在所要求的容器中没有
 经过验证的可用配对，因此 `formats` 不公布对应输出组合；64 位整数 LE/WAV 已验证。
 裸输入必须指定格式、采样率和声道。对应音频 demuxer、parser、decoder
 一并编入，输入限本地普通文件。
@@ -198,7 +198,7 @@ cargo run --locked --example library -- recording.m4a example-chunks
 cargo package --locked --allow-dirty
 ```
 
-bootstrap 需要 C/C++ 编译器、make、autotools、patch、pkg-config、curl、tar/xz，
+bootstrap 需要 C/C++ 编译器、make、autotools、pkg-config、curl、tar/xz，
 只安装到项目指定前缀。源码版本和校验值固定在 `scripts/audio-sources.sha256`；
 组件集中维护于 `scripts/audio-components.sh`，configure 后逐项检查。
 设置 `FFMPEG_DIR` 和 `PREFIX` 后，`scripts/build-ffmpeg-audio-static.sh` 可以单独

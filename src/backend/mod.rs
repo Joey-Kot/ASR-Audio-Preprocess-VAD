@@ -167,9 +167,9 @@ impl<'a> Reader<'a> {
     pub fn open(input: &Input, control: &'a Control<'a>) -> Result<Self> {
         let _logs = LogScope::new();
         control.check()?;
-        if version() != "8.1.3" {
+        if version() != "9.0.2" {
             return Err(crate::error::invalid(format!(
-                "FFmpeg 8.1.3 is required; linked {}",
+                "FFmpeg 9.0.2 is required; linked {}",
                 version()
             )));
         }
